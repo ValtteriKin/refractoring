@@ -1,0 +1,29 @@
+@apiserver=http://localhost:3000
+
+### Test get /todos expected result list of todos, status code 200
+GET {{apiserver}}/todos
+
+### Test get /todos
+GET {{apiserver}}/todos?state=todo
+
+### Test GET /todos/:id that does not exist => 404
+GET {{apiserver}}/todos/1010 
+
+### POST a new todo item
+POST {{apiserver}}/todos
+Content-Type: application/json
+
+{
+    "title": "Finish the weekly assignment",
+    "description": "The current assignment is nr 4",
+    "state": "todo"
+}
+
+### PUT test todo item
+PUT {{apiserver}}/todos/ea9f2216-d8f1-4f46-bfed-325828977778
+Content-Type: application/json
+
+{
+    "title": "Updated API documentation",
+    "state": "doing"
+}
