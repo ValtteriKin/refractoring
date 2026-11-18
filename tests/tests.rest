@@ -7,7 +7,7 @@ GET {{apiserver}}/todos
 GET {{apiserver}}/todos?state=todo
 
 ### Test GET /todos/:id that does not exist => 404
-GET {{apiserver}}/todos/1010 
+GET {{apiserver}}/todos/82515de9-0b23-424d-9b9b-711615f862ac
 
 ### POST a new todo item
 POST {{apiserver}}/todos
@@ -16,7 +16,7 @@ Content-Type: application/json
 {
     "title": "Finish the weekly assignment",
     "description": "The current assignment is nr 4",
-    "state": "todo"
+    "state": "doing"
 }
 
 ### PUT test todo item

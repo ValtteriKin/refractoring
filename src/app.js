@@ -3,7 +3,8 @@ import express from 'express'
 import indexRouter from './routes/index.js'
 import usersRouter from './routes/users.js'
 import todosRouter from './routes/todos.js'
-
+// add yaml code here
+//app.use(/doc) /doc localhost:3000/doc address for webpage
 const app = express()
 
 // support for json
