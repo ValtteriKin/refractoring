@@ -27,7 +27,7 @@ const allowedStates = ['todo', 'doing', 'done']
 export function PostTodo(todo){   //creates a post endpoint with /todos url path
 
     if(typeof todo.title !== 'string' || todo.title.trim().length === 0 || typeof todo.description !== 'string' || todo.description.trim().length === 0){
-        throw new error('todo filled incorectly')
+        throw new Error('todo filled incorectly')
     }
     if(todo.state !== undefined){   
         if(!allowedStates.includes(todo.state)){
