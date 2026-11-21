@@ -74,7 +74,7 @@ describe('Todo Service Tests', () => {
         assert.throws(() => {
             PostTodo({
                 id: uuidv4(),
-                 title: 'new todo',
+                title: 'new todo',
                 description: 'new description',
                 state: 'non existing',   
                 dueDate: new Date(),

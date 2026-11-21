@@ -75,13 +75,14 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const id = req.params.id;
+    const todo = GetTodoWithID(id);
 
-    if(!id) {
+    if(!todo) {
         return res.status(404).json({
             error: 'Todo not found'
         });
     }
-    res.json(GetTodoWithID(id));
+    res.status(200).json(todo);
 });
 
 router.put('/:id', (req, res) => {
