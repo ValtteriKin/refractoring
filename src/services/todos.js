@@ -113,3 +113,24 @@ export function DeleteTodo(id){
     return deleted
 
 }
+
+export function toCsv(todos) {
+    return [
+        [
+            "id",
+            "title",
+            "description",
+            "state",
+            "createdAt",
+            "updatedAt"
+        ],
+        ...todos.map(item => [
+            item.id,
+            "\"" + item.title + "\"",
+            "\"" + item.description+"\"",
+            item.state,
+            item.createdAt,
+            item.updatedAt
+        ])
+    ].map(e => e.join(",")).join("\n")
+}

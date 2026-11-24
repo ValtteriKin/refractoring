@@ -5,7 +5,8 @@ import {
     getAllTodos,
     GetTodoWithID,
     PostTodo,
-    PutTodo
+    PutTodo,
+    toCsv
 } from '../services/todos.js'
 
 const router = express.Router()
@@ -65,7 +66,17 @@ router.post('/', (req, res) => {   //creates a post endpoint with /todos url pat
 router.get('/', (req, res) => {
     try{
         const state = req.query.state;   //saves query parameter
-        res.status(200).json(getAllTodos(state))
+        const format = req.accepts(['application/json', 'text/csv'])  //checks responce format
+        
+        if(!format) {
+            return res.status(406).send("Not Acceptable")
+        }
+        const todos = getAllTodos(state)
+        if (format === 'text/csv') {
+            return res.type('text/csv').send(toCsv(todos))
+        }
+
+        res.status(200).json(todos)
     }catch (error){
         res.status(400).json({
             error: error.message

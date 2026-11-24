@@ -1,4 +1,6 @@
 import express from 'express'
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 import indexRouter from './routes/index.js'
 import usersRouter from './routes/users.js'
@@ -9,6 +11,10 @@ const app = express()
 
 // support for json
 app.use(express.json())
+
+const swaggerDocument = YAML.load('./openapi/api.yaml');
+const swaggerOptions = {};
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 
 // define handlers for various routes
 app.use('/', indexRouter)

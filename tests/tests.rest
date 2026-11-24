@@ -5,6 +5,7 @@ GET {{apiserver}}/todos
 
 ### Test get /todos
 GET {{apiserver}}/todos?state=todo
+Accept: text/csv
 
 ### Test GET /todos/:id that does not exist => 404
 GET {{apiserver}}/todos/82515de9-0b23-424d-9b9b-711615f862ac
