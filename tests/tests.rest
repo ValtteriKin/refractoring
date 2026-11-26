@@ -1,7 +1,16 @@
 @apiserver=http://localhost:3000
 
+POST http://localhost:3000/auth
+content-type: application/json
+
+{
+    "username": "Alice",
+    "password": "sala"
+}
+
 ### Test get /todos expected result list of todos, status code 200
 GET {{apiserver}}/todos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBbGljZSIsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3OTU2ODY2ODMsImV4cCI6MTc5NTY4NzU4M30.w0gBV5CV555PJPIJUToMIeWIypn6c71KGv7XxCtAAAg
 
 ### Test get /todos
 GET {{apiserver}}/todos?state=todo

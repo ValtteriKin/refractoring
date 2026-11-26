@@ -15,11 +15,66 @@ tags:
     description: CRUD operations on Todo items
 
 paths:
+  /auth:
+    post: 
+      tags: [Authentication]
+      summary: Login and obtain auth tokens
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                  example: yourUsername
+                password:
+                  type: string
+                  example: yourPassword
+      responses:
+        '200':
+          description: succesfully logged in
+        '401':
+          description: invalid username or password
+  /auth/refresh:
+    post:
+      tags: [Authentication]
+      summary: obtain a new access tokens
+      responses:
+        '200':
+          description: new access token generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+        '401':
+          description: missing or invalid refresh token
+        '403': 
+          description: expired or revoked refresh token
+  /auth/logout:
+    post:
+      tags: [Authentication]
+      summary: logout
+      responses:
+        '200':
+          description: succesfully logget out
+        '401': 
+          description: Missing or invalid refresh token
+
   /todos: 
     post:
       tags: [ Todos ]
       produces: [ 'application/json' ]
       summary: Create a new todo item
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -35,10 +90,16 @@ paths:
                 $ref: '#/components/schemas/TodoItem'
         '400': 
           $ref: '#/components/responses/BadRequest'
+        '401':
+          description: Missing access token
+        '403':
+          description: Invalid access token
     get:
       tags: [ Todos ] 
       produces: [ 'application/json', 'text/csv' ]
       summary: Get all todos, or filter by state
+      security:
+        - BearerAuth: []
       parameters:
         - name: state
           in: query
@@ -71,6 +132,8 @@ paths:
       tags: [ Todos ]
       produces: [ 'application/json' ]
       summary: returns a todo by id
+      security:
+        - BearerAuth: []
       parameters:
         - $ref: '#/components/parameters/TodoId'
       responses:
@@ -87,6 +150,8 @@ paths:
       tags: [ Todos ]
       produces: [ 'application/json']
       summary: Modify existing todo by id
+      security:
+        - BearerAuth: []
       parameters:
         - $ref: '#/components/parameters/TodoId'
       requestBody:
@@ -108,6 +173,8 @@ paths:
       tags: [ Todos ]
       produces: ['application/json']
       summary: Deletes todo by id
+      security:
+        - BearerAuth: []
       parameters: 
         - $ref: '#/components/parameters/TodoId'
       responses:
@@ -122,6 +189,11 @@ paths:
         
 
 components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: Bearer
+      bearerFormat: JWT
   schemas:
     TodoState:
       type: string
